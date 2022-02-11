@@ -2,23 +2,23 @@
 <head>
   <meta charset="UTF-8">
   <title>Kite - Zerodha's Clone</title>
-  <link rel="stylesheet" href="./styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- open graph -->
-  <meta property="og:image" content="static/images/landing.png">
+  <meta property="og:image" content="./static/images/landing.png">
   <meta property="og:description" content="Kite web clone, Android, and iOS app; Zerodha's slick and modern trading platforms.">
   <meta property="og:image:alt" content="Kite clone – Zerodha's sleek, fast, and modern flagship trading platform">
   <meta property="og:title" content="Kite clone – Zerodha's sleek, fast, and modern flagship trading platform">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://zerodha-kite-clone.neltify.app/products/kite/">
   <meta name="referrer" content="origin">
-  <link rel="image_src" href="/static/images/landing.png">
-  <link rel="icon" type="image/png" href="/static/images/favicon.png">
+  <link rel="image_src" href="./static/images/landing.png">
+  <link rel="icon" type="image/png" href="./static/images/favicon.png">
   <link href="https://fonts.googleapis.com/css?family=Inter:400,500" rel="stylesheet">
   <script type="application/ld+json">
     {
@@ -42,6 +42,7 @@
       ]
     }
   </script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
   <noscript>
@@ -66,7 +67,7 @@
         </div>
         <div class="header-right">
             <a href="/dashboard" class="logo">
-              <img src="/static/images/download.png" alt="Kite logo" >
+              <img src="./static/images/download.png" alt="Kite logo" >
             </a>
           <div class="app-nav">
 
@@ -77,178 +78,92 @@
     </div>
     <div class="container wrapper">
       <div class="container-left">
-        <div class="marketwatch-sidebar marketwatch-wrap">
+        <div class="marketwatch-sidebar">
           <div class="marketsearch">
-            <input type="text" class="marketsearch-input" placeholder="Search eg: Infy bse, nifty fut weekly, gold mcs"/>
+            <input type="text" id="marketsearch-input" class="marketsearch-input" placeholder="Search eg: Infy bse, nifty fut weekly, gold mcs"/>
             <div class="marketsearch-total">7/50</div>
           </div>
-          <div class="instruments">
-            <div class="instruments-item">
-              <div class="instruments-item--caption text-green">GOLDBEES</div>
-              <div class="instruments-item--change">0.10</div>
-              <div class="change-percentage">%</div>
-              <div class="fas instruments-item--arrow fa-chevron-up text-green"></div>
-              <div class="instruments-item--value text-green">41.60</div>
-            </div>
-            <div class="instruments-item">
-              <div class="instruments-item--caption text-green">HINDUNILVR</div>
-              <div class="instruments-item--change">0.37</div>
-              <div class="change-percentage">%</div>
-              <div class="fas instruments-item--arrow fa-chevron-up text-green"></div>
-              <div class="instruments-item--value text-green">2306.60</div>
-            </div>
-            <div class="instruments-item">
-              <div class="instruments-item--caption text-green">INFY</div>
-              <div class="instruments-item--change">0.15</div>
-              <div class="change-percentage">%</div>
-              <div class="fas instruments-item--arrow fa-chevron-up text-green"></div>
-              <div class="instruments-item--value text-green">1741.10</div>
-            </div>
-            <div class="instruments-item">
-              <div class="instruments-item--caption text-green">ONGC</div>
-              <div class="instruments-item--change">1.25</div>
-              <div class="change-percentage">%</div>
-              <div class="fas instruments-item--arrow fa-chevron-up text-green"></div>
-              <div class="instruments-item--value text-green">169.60</div>
-            </div>
-            <div class="instruments-item">
-              <div class="instruments-item--caption text-red">TCS</div>
-              <div class="instruments-item--change ">-0.25</div>
-              <div class="change-percentage">%</div>
-              <div class="fas instruments-item--arrow fa-chevron-down text-red"></div>
-              <div class="instruments-item--value text-red">3815.90</div>
-            </div>
-            <div class="instruments-item">
-              <div class="instruments-item--caption text-red">ZOMATO</div>
-              <div class="instruments-item--change">-2.99</div>
-              <div class="change-percentage">%</div>
-              <div class="fas instruments-item--arrow fa-chevron-down text-red"></div>
-              <div class="instruments-item--value text-red">94.20</div>
-            </div>
-            <div class="instruments-item">
-              <div class="instruments-item--caption text-green">JSWSTEEL</div>
-              <div class="instruments-item--change">0.64</div>
-              <div class="change-percentage">%</div>
-              <div class="fas instruments-item--arrow fa-chevron-up text-green"></div>
-              <div class="instruments-item--value text-green ">657.35</div>
+          <div class="marketsearch-results">
+            <div class="marketsearch-results--instruments">
             </div>
           </div>
-          <ul class="marketwatch-selector">
+          <div class="instruments">
+          </div>
+          <!-- <ul class="marketwatch-selector">
             <li class="item selected">1</li>
             <li class="item">2</li>
-            <li class="item">3</li>
-            <li class="item">4</li>
-            <li class="item">5</li>
-            <li class="item">6</li>
-            <li class="item">7</li>
             <li class="settings">
               <span class="fas fa-cog"></span>
             </li>
-          </ul>
+          </ul> -->
         </div>
       </div>
       <div class="container-right">
         <div class="page-content">
           <div class="dashboard">
+            <div class="page-content--transactions">
             <div class="greeting">
               Hi, Sameer
             </div>
-            <div class="transaction-window">
-              <div class="transaction-window--header">
-                <div class="transaction-window--header-left">
-                  <div class="flex-row">
-                    <div class="transaction-caption">Buy ZOMATO</div>
-                    <div class="transaction-market">NSE</div>
-                    <div class="transaction-quantity"> x 1Qty</div>
-                  </div>
-                  <div class="flex-row">
-                    <div class="transaction-window--header-radio">
-                      <input type="radio" id="BSE" name="purchase_type">
-                      <label for="BSE">BSE: 94.20</label>
-                    </div>
-                    <div class="transaction-window--header-radio">
-
-                    <input type="radio" id="NSE" name="purchase_type">
-                    <label for="NSE">NSE: 94.20</label>
-                    </div>
-                  </div>
-                </div>
-                <div class="transaction-window--header-right">
-                  
-                </div>
-              </div>
-              <ul class="transaction-window--type">
-                <li class="transaction-type--item selected">Regular</li>
-                <li class="transaction-type--item">Cover</li>
-                <li class="transaction-type--item">AMO</li>
-              </ul>
-              <div class="transaction-window--main">
-                <div class="flex-row">
-                  <div class="transaction-window--header-radio">
-                    <input type="radio" id="Intraday" name="market_option">
-                    <label for="Intraday">Intraday</label>
-                  </div>
-                  <div class="transaction-window--header-radio">
-
-                  <input type="radio" id="Longterm" name="market_option">
-                  <label for="Longterm">Longterm</label>
-                  </div>
-                </div>
-                <div class="transaction-window--input">
-                  <div>
-                    <input type="text" placeholder="Qty.">
-                  </div>
-                  <div>
-                    <input type="text" placeholder="Price">
-                  </div>
-                  <div>
-                    <input type="text" placeholder="Trigger Price">
-                  </div>
-                </div>
-                <div class="transaction-window--options">
-                  <div class="dropdown text-blue">More
-                    <div class="fas instruments-item--arrow fa-chevron-down text-blue"></div>
-                  </div>
-                  <div class="flex-row">
-                    <div class="transaction-window--header-radio">
-                      <input type="radio" id="limit" name="market_type">
-                      <label for="limit">Market</label>
-                    </div>
-                    <div class="transaction-window--header-radio">
-  
-                    <input type="radio" id="market" name="market_type">
-                    <label for="market">Limit</label>
-                    </div>
-                  </div>
-                  <div class="flex-row">
-                    <div class="transaction-window--header-radio">
-                      <input type="radio" id="SL" name="stop_loss">
-                      <label for="SL">SL</label>
-                    </div>
-                    <div class="transaction-window--header-radio">
-  
-                    <input type="radio" id="SL-M" name="stop_loss">
-                    <label for="SL-M">SL-M</label>
-                    </div>
-                  </div>
-                </div>
-                
-              </div>
-              <div class="transaction-window--buttons">
-                <div class="flex-row" style="font-size: small">
-                  <div>Margin required</div>
-                  <div style="padding-left: 10px">94.20</div>
-                </div>
-                <div>
-                  <button class="bg-blue" style="padding: 10px 15px; width: 100px;">Buy</button>
-                  <button class="bg-white" style="padding: 10px 15px; width: 100px;">Cancel</button>
-                </div>
+            <div class="heading">Completed Transactions</div>
+            <div class="table-container">
+              <table id="table">
+                <thead>
+                  <tr>
+                    <td>Symbol</td>
+                    <td>Trade Time</td>
+                    <td>Type</td>
+                    <td>Qty.</td>
+                    <td>Price</td>
+                  </tr>
+                </thead>
+                <tbody class="completed-transactions">
+                </tbody>
+              </table>
+            </div>
+            <div class="heading">Pending Transactions</div>
+            <div class="table-container">
+              <table id="table">
+                <thead>
+                  <tr>
+                    <td>Symbol</td>
+                    <td>Trade Time</td>
+                    <td>Type</td>
+                    <td>Qty.</td>
+                    <td>Price</td>
+                  </tr>
+                </thead>
+                <tbody class="pending-transactions">
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="page-content--portfolio">
+            <div class="greeting">
+              Portfolio
+            </div>
+            <div class="heading"><span class="margin"></span><span style="padding-left: 10px;" class="investment"></span></div>
+            <div class="portfolio">
+              <div class="table-container">
+                <table id="table">
+                  <thead>
+                    <tr>
+                      <td>Symbol</td>
+                      <td>Qty.</td>
+                      <td>Average</td>
+                    </tr>
+                  </thead>
+                  <tbody class="portfolio-transactions">
+                  </tbody>
+                </table>
               </div>
             </div>
+          </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+  <script src="./js/script.js"></script>
 </body>
 </html>
